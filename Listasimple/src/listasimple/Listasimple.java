@@ -25,8 +25,9 @@ public class Listasimple {
         n.InsertarUltimo(2);
         n.imprimir();
         
-        n.Eliminar(10);
+        n.Eliminar(50);
         n.imprimir();
+        n.GenerarGraphyz();
     }
     
 }

@@ -5,6 +5,12 @@
  */
 package listasimple;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 /**
  *
  * @author jdol
@@ -77,7 +83,7 @@ public class Lista {
             }
             }
         }else{
-            System.out.println("lista vacia");
+            System.out.println("lista vacia o no se encontro dato");
         }
     }
     public void imprimir(){
@@ -91,6 +97,63 @@ public class Lista {
             System.out.println("tamaño: "+tama);
         }else{
         System.out.println("lista vacia");
+        }
+    }
+    public void GenerarGraphyz(){
+        try {
+            //escribir dot
+            FileWriter codigo = new FileWriter("listasimple" + ".dot");
+            PrintWriter documento = new PrintWriter(codigo);
+            documento.println("digraph G {\n");
+            documento.println("node[shape=box];\n");
+            documento.println("\t\t//generar lista simple\n");
+            documento.println(Gcodigo());
+
+            documento.println("}");
+            codigo.close();
+
+            //compilar dot y generar imagen
+            File miDir = new File(".");
+            String ruta = miDir.getCanonicalPath() + "/";//ruta actual
+            String salida = "dot -Tpng " + ruta + "listasimple" + ".dot -o " + ruta + "listasimple" + ".png";
+            Runtime rt = Runtime.getRuntime();
+            rt.exec(salida);
+            //abrir imagen
+            miDir = new File(ruta +"listasimple" + ".png");
+            Desktop.getDesktop().open(miDir);
+
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+
+    }
+    private String Gcodigo(){
+     String codigo = "";
+        if (primero != null) {
+            Nodo aux = primero;
+            String rank1 = "";
+
+            //==============================================crecacion de nodos  nodos=================================
+            int contador1 = 0;
+            while (aux!=null) {
+                codigo = codigo + "RR" + contador1 + "[label=\"Dato: " + aux.getDato()+"\",color=\"burlywood\"];\n";
+                aux = aux.getSiguiente();
+                contador1++;
+            }
+            //=============================================================== conexcion de nodos==========================================
+            contador1 = 0;
+            while (contador1 < tama) {
+                if (contador1==0) {
+                    rank1 = rank1 + "RR" + contador1;
+                } else {
+                    rank1 = rank1 + "->" + "RR" + contador1;
+                }
+                contador1++;
+            }
+            codigo = codigo + "{rank=same; " + rank1 +";};\n";
+            return codigo;
+        } else {
+            return codigo = "RR[label = \"Lista vacia\"   width = 1.5 style = filled,shape=box,style=filled,color=\"red\"]; \n";
         }
     }
 }

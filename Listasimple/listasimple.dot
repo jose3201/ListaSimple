@@ -1,0 +1,14 @@
+digraph G {
+
+node[shape=box];
+
+		//generar lista simple
+
+RR0[label="Dato: 20",color="burlywood"];
+RR1[label="Dato: 10",color="burlywood"];
+RR2[label="Dato: 8",color="burlywood"];
+RR3[label="Dato: 1",color="burlywood"];
+RR4[label="Dato: 2",color="burlywood"];
+{rank=same; RR0->RR1->RR2->RR3->RR4;};
+
+}
