@@ -74,6 +74,7 @@ public class Lista {
             }
             if (aux.getSiguiente()==null) {
                 aux2.setSiguiente(null);
+                ultimo=aux2;
                 tama--;
             } else {
                 Nodo aux3=aux.getSiguiente();
